@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<p>
+    <input type = "button" value = "open page" onclick = "openwindow()">
+</p>
+<p>
+    <input type = "button" value = "close page" onclick = "closeport()">
+</p>
+
+
+<script>
+
+function openwindow(){
+	//開いたウィンドウ
+	var towindow=window.open("index2.html");
+}
+
+function closeport(){
+	//開いたウィンドウ
+	port.close();
+}
+//開いたウィンドウからMessagePortが送られてくるのを待つ
+var port;
+window.addEventListener("message",function(e){
+	var port=e.ports[0];	//向こう側から送られてきたポート
+	port.start();	//受信可能にする
+	//ポートに対して送られてきたメッセージを表示する
+	port.addEventListener("message",function(e){
+		//div要素を作って表示する
+		var div=document.createElement("div");
+		div.textContent="sent message:"+e.data;
+		document.body.appendChild(div);
+	});
+	port.addEventListener("close",function(e){
+		var div=document.createElement("div");
+		div.textContent="entangled port is closed";
+		document.body.appendChild(div);
+});
+
+	
+});
+
+
+</script>
+</body>
+</html>

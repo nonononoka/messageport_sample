@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<form onsubmit = "send(event)">
+        <p>
+            <input type = "text" name = "message" size = "50">
+            <input type = "submit" value = "send">
+        </p>
+</form>
+
+<p>
+    <input type = "button" value = "close page" onclick = "closeport()">
+</p>
+
+<script>
+
+//まず親ウィンドウへMessagePortを送る
+var channel=new MessageChannel();
+//port1を自分が持って、port2を親に渡す
+//実はwindow.openされたとき、親ウィンドウはwindow.openerに入っている
+window.opener.postMessage({},"*",[channel.port2]);
+//port1を利用可能にする
+channel.port1.start();
+
+channel.port1.addEventListener("close",function(e){
+		var div=document.createElement("div");
+		div.textContent="entangled port is closed";
+		document.body.appendChild(div);
+});
+
+//onsubmit（フォームが送信されたとき）に呼び出される
+function send(ev){
+	//evはイベントオブジェクト。
+	var form=ev.target;
+	
+	//MessagePortを使ってメッセージを送る
+	channel.port1.postMessage(form.elements["message"].value);
+	
+	//フォームの送信は中止する
+	ev.preventDefault();
+	//フォームは空の状態に戻す
+	form.reset();
+}
+
+function closeport(){
+	//開いたウィンドウ
+	channel.port1.close();
+}
+
+
+
+</script>
+</body>
+</html>
