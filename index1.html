@@ -16,7 +16,7 @@
 <form onsubmit = "send(event)">
 	<p>
 		<input type = "text" name = "message" size = "50">
-		<input type = "submit" value = "send">
+		<input type = "submit" value = "send" id = "submit_button" disabled = true>
 	</p>
 </form>
 
@@ -49,6 +49,8 @@ function send(ev){
 }
 //開いたウィンドウからMessagePortが送られてくるのを待つ
 window.addEventListener("message",function(e){
+	const button = document.getElementById('submit_button');
+	button.disabled = false;
 	port=e.ports[0];	//向こう側から送られてきたポート
 	port.start();	//受信可能にする
 	//ポートに対して送られてきたメッセージを表示する
