@@ -13,6 +13,13 @@
     <input type = "button" value = "close page" onclick = "closeport()" id = 'close_button'>
 </p>
 
+<form onsubmit = "send(event)">
+	<p>
+		<input type = "text" name = "message" size = "50">
+		<input type = "submit" value = "send">
+	</p>
+</form>
+
 
 <script>
 var port;
@@ -26,7 +33,20 @@ function closeport(){
 	const button = document.getElementById('close_button');
 	button.disabled = true;
 	port.close();
-    }
+}
+
+function send(ev){
+	//evはイベントオブジェクト。
+	var form=ev.target;
+	
+	//MessagePortを使ってメッセージを送る
+	port.postMessage(form.elements["message"].value);
+	
+	//フォームの送信は中止する
+	ev.preventDefault();
+	//フォームは空の状態に戻す
+	form.reset();
+}
 //開いたウィンドウからMessagePortが送られてくるのを待つ
 window.addEventListener("message",function(e){
 	port=e.ports[0];	//向こう側から送られてきたポート
