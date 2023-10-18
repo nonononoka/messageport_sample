@@ -20,6 +20,7 @@
 <script>
 
 //まず親ウィンドウへMessagePortを送る
+function foo(){
 var channel=new MessageChannel();
 //port1を自分が持って、port2を親に渡す
 //実はwindow.openされたとき、親ウィンドウはwindow.openerに入っている
@@ -39,6 +40,7 @@ channel.port1.addEventListener("message",function(e){
 		div.textContent="sent message:"+e.data;
 		document.body.appendChild(div);
 	});
+	let port = new WeakRef(channel.port1);
 
 //onsubmit（フォームが送信されたとき）に呼び出される
 function send(ev){
@@ -61,7 +63,16 @@ function closeport(){
 	channel.port1.close();
 }
 
+}
 
+foo();
+
+function boo(){
+	const msg = "hello messageport";
+	console.log(msg);
+}
+
+boo();
 
 </script>
 </body>
