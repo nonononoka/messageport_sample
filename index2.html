@@ -29,7 +29,7 @@ window.opener.postMessage({},"*",[channel.port2]);
 //port1を利用可能にする
 channel.port1.start();
 channel.port1.postMessage("hello port");
-let p = new WeakRef(channel.port1);
+channel.port1 = null;
 }
 
 // channel.port1.addEventListener("close",function(e){
