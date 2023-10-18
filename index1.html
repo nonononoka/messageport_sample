@@ -10,7 +10,7 @@
     <input type = "button" value = "open page" onclick = "openwindow()">
 </p>
 <p>
-    <input type = "button" value = "close page" onclick = "closeport()">
+    <input type = "button" value = "close page" onclick = "closeport()" id = 'close_button'>
 </p>
 
 
@@ -23,6 +23,8 @@ function openwindow(){
 
 function closeport(){
 	//開いたウィンドウ
+	const button = document.getElementById('close_button');
+	button.disabled = true;
 	port.close();
     }
 //開いたウィンドウからMessagePortが送られてくるのを待つ

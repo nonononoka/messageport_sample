@@ -14,7 +14,7 @@
 </form>
 
 <p>
-    <input type = "button" value = "close page" onclick = "closeport()">
+    <input type = "button" value = "close page" onclick = "closeport()" id = 'close_button'>
 </p>
 
 <script>
@@ -49,6 +49,8 @@ function send(ev){
 
 function closeport(){
 	//開いたウィンドウ
+	const button = document.getElementById('close_button');
+	button.disabled = true;
 	channel.port1.close();
 }
 
