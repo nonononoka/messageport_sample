@@ -15,7 +15,7 @@
 
 
 <script>
-
+var port;
 function openwindow(){
 	//開いたウィンドウ
 	var towindow=window.open("index2.html");
@@ -26,7 +26,6 @@ function closeport(){
 	port.close();
     }
 //開いたウィンドウからMessagePortが送られてくるのを待つ
-var port;
 window.addEventListener("message",function(e){
 	port=e.ports[0];	//向こう側から送られてきたポート
 	port.start();	//受信可能にする
