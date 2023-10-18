@@ -6,20 +6,21 @@
     <title>Document</title>
 </head>
 <body>
-<form onsubmit = "send(event)">
+<!-- <form onsubmit = "send(event)"> -->
         <p>
-            <input type = "text" name = "message" size = "50">
-            <input type = "submit" value = "send">
+            <!-- <input type = "text" name = "message" size = "50"> -->
+            <!-- <input type = "submit" value = "send"> -->
         </p>
 </form>
 
 <p>
-    <input type = "button" value = "close page" onclick = "closeport()" id = 'close_button'>
+    <!-- <input type = "button" value = "close page" onclick = "closeport()" id = 'close_button'> -->
 </p>
 
 <script>
 
 //まず親ウィンドウへMessagePortを送る
+function foo(){
 var channel=new MessageChannel();
 //port1を自分が持って、port2を親に渡す
 //実はwindow.openされたとき、親ウィンドウはwindow.openerに入っている
@@ -29,48 +30,49 @@ channel.port1.start();
 channel.port1.postMessage("hello port");
 // let port = new WeakRef(channel.port1);
 
-channel.port1.addEventListener("close",function(e){
-		var div=document.createElement("div");
-		div.textContent="entangled port is closed";
-		document.body.appendChild(div);
-});
+// channel.port1.addEventListener("close",function(e){
+// 		var div=document.createElement("div");
+// 		div.textContent="entangled port is closed";
+// 		document.body.appendChild(div);
+// });
+}
 
-channel.port1.addEventListener("message",function(e){
-		//div要素を作って表示する
-		var div=document.createElement("div");
-		div.textContent="sent message:"+e.data;
-		document.body.appendChild(div);
-	});
+// channel.port1.addEventListener("message",function(e){
+// 		//div要素を作って表示する
+// 		var div=document.createElement("div");
+// 		div.textContent="sent message:"+e.data;
+// 		document.body.appendChild(div);
+// 	});
 
 //onsubmit（フォームが送信されたとき）に呼び出される
-function send(ev){
-	//evはイベントオブジェクト。
-	var form=ev.target;
+// function send(ev){
+// 	//evはイベントオブジェクト。
+// 	var form=ev.target;
 	
-	//MessagePortを使ってメッセージを送る
-	channel.port1.postMessage(form.elements["message"].value);
+// 	//MessagePortを使ってメッセージを送る
+// 	channel.port1.postMessage(form.elements["message"].value);
 	
-	//フォームの送信は中止する
-	ev.preventDefault();
-	//フォームは空の状態に戻す
-	form.reset();
-}
-
-function closeport(){
-	//開いたウィンドウ
-	const button = document.getElementById('close_button');
-	button.disabled = true;
-	channel.port1.close();
-}
-
-// foo();
-
-// function boo(){
-// 	const msg = "hello messageport";
-// 	console.log(msg);
+// 	//フォームの送信は中止する
+// 	ev.preventDefault();
+// 	//フォームは空の状態に戻す
+// 	form.reset();
 // }
 
-// boo();
+// function closeport(){
+// 	//開いたウィンドウ
+// 	const button = document.getElementById('close_button');
+// 	button.disabled = true;
+// 	channel.port1.close();
+// }
+
+foo();
+
+function boo(){
+	const msg = "hello messageport";
+	console.log(msg);
+}
+
+boo();
 
 </script>
 </body>
