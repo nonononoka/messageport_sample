@@ -26,10 +26,10 @@ function sendportandpostmessage(){
 //port1を自分が持って、port2を親に渡す
 //実はwindow.openされたとき、親ウィンドウはwindow.openerに入っている
 const { port1, port2 } = new MessageChannel();
-window.opener.postMessage({},"*",[port2]);
+// window.opener.postMessage({},"*",[port2]);
 //port1を利用可能にする
 port1.start();
-port1.postMessage("hello port");
+// port1.postMessage("hello port");
 port1 = null;
 port2 = null;
 window.gc();
