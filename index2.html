@@ -28,6 +28,11 @@ function sendportandpostmessage(){
 //port1を自分が持って、port2を親に渡す
 //実はwindow.openされたとき、親ウィンドウはwindow.openerに入っている
 const { port1, port2 } = new MessageChannel();
+port1.addEventListener("close",function(e){
+		var div=document.createElement("div");
+		div.textContent="entangled port is closed";
+		document.body.appendChild(div);
+});
 // window.opener.postMessage({},"*",[port2]);
 //port1を利用可能にする
 port1.start();
@@ -37,11 +42,7 @@ wr2 = new WeakRef(port2);
 window.gc();
 }
 
-// channel.port1.addEventListener("close",function(e){
-// 		var div=document.createElement("div");
-// 		div.textContent="entangled port is closed";
-// 		document.body.appendChild(div);
-// });
+
 
 
 // channel.port1.addEventListener("message",function(e){
