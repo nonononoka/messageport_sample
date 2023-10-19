@@ -14,25 +14,25 @@
 </form> -->
 
 <p>
-    <input type = "button" value = "send port" onclick = "sendport()" >
-    <input type = "button" value = "post message" onclick = "postmessage()">
-    <input type = "button" value = "close page" onclick = "closeport()" id = 'close_button'>
+    <input type = "button" value = "send port and post message" onclick = "sendportandpostmessage()" >
+    <!-- <input type = "button" value = "post message" onclick = "postmessage()">
+    <input type = "button" value = "close page" onclick = "closeport()" id = 'close_button'> -->
 </p>
 
 <script>
 
 //まず親ウィンドウへMessagePortを送る
-var channel=new MessageChannel();
-function sendport(){
+function sendportandpostmessage(){
 //port1を自分が持って、port2を親に渡す
 //実はwindow.openされたとき、親ウィンドウはwindow.openerに入っている
-window.opener.postMessage({},"*",[channel.port2]);
+const { port1, port2 } = new MessageChannel();
+window.opener.postMessage({},"*",[port2]);
 //port1を利用可能にする
-channel.port1.start();
-}
-
-function postmessage(){
-    channel.port1.postMessage("hello port");
+port1.start();
+port1.postMessage("hello port");
+port1 = null;
+port2 = null;
+windwo.gc();
 }
 
 // channel.port1.addEventListener("close",function(e){
@@ -73,12 +73,6 @@ function postmessage(){
 // foo();
 // window.gc();
 
-function boo(){
-	const msg = "hello messageport";
-	console.log(msg);
-}
-
-boo();
 
 </script>
 </body>
