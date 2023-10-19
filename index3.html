@@ -14,6 +14,7 @@
 </form>
 
 <p>
+	<input type = "button" value = "send port" onclick = "sendport()" id = 'send_button'> 
     <input type = "button" value = "close port" onclick = "closeport()" id = 'close_button'> 
 </p>
 
@@ -22,8 +23,7 @@
 //port1を自分が持って、port2を親に渡す
 //実はwindow.openされたとき、親ウィンドウはwindow.openerに入っている
 const channel = new MessageChannel();
-window.opener.postMessage({},"*",[channel.port2]);
-channel.port1.start();
+
 channel.port1.addEventListener("close",function(e){
 		var div=document.createElement("div");
 		div.textContent="entangled port is closed";
@@ -36,6 +36,15 @@ channel.port1.addEventListener("message",function(e){
 		div.textContent="sent message:"+e.data;
 		document.body.appendChild(div);
 	});
+
+function sendport(){
+window.opener.postMessage({},"*",[channel.port2]);
+channel.port1.start();
+const button = document.getElementById('send_button');
+	button.disabled = true;
+}
+
+
 //port1を利用可能にする
 
 // onsubmit（フォームが送信されたとき）に呼び出される
