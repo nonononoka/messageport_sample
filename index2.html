@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Document2</title>
 </head>
 <body>
 <!-- <form onsubmit = "send(event)">
@@ -14,9 +14,7 @@
 </form> -->
 
 <p>
-    <input type = "button" value = "create channel and GCed" onclick = "sendportandpostmessage()" >
-    <input type = "button" value = "post message" onclick = "postmessage()"> 
-    <input type = "button" value = "close page" onclick = "closeport()" id = 'close_button'> -->
+    <input type = "button" value = "create channel and GCed" onclick = "sendportandpostmessage()" > 
 </p>
 
 <script>
@@ -39,6 +37,7 @@ port1.start();
 
 wr1 = new WeakRef(port1);
 wr2 = new WeakRef(port2);
+window.gc();
 }
 
 function postmessage() {
@@ -47,36 +46,6 @@ function postmessage() {
 
 }
 
-// channel.port1.addEventListener("message",function(e){
-// 		//div要素を作って表示する
-// 		var div=document.createElement("div");
-// 		div.textContent="sent message:"+e.data;
-// 		document.body.appendChild(div);
-// 	});
-
-// onsubmit（フォームが送信されたとき）に呼び出される
-// function send(ev){
-// 	//evはイベントオブジェクト。
-// 	var form=ev.target;
-	
-// 	//MessagePortを使ってメッセージを送る
-// 	channel.port1.postMessage(form.elements["message"].value);
-	
-// 	//フォームの送信は中止する
-// 	ev.preventDefault();
-// 	//フォームは空の状態に戻す
-// 	form.reset();
-// }
-
-// function closeport(){
-// 	//開いたウィンドウ
-// 	const button = document.getElementById('close_button');
-// 	button.disabled = true;
-// 	channel.port1.close();
-// }
-
-// foo();
-// window.gc();
 
 
 </script>
