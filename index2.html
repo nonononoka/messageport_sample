@@ -15,7 +15,7 @@
 
 <p>
     <input type = "button" value = "create channel and GCed" onclick = "sendportandpostmessage()" >
-    <!-- <input type = "button" value = "post message" onclick = "postmessage()">
+    <input type = "button" value = "post message" onclick = "postmessage()"> 
     <input type = "button" value = "close page" onclick = "closeport()" id = 'close_button'> -->
 </p>
 
@@ -33,17 +33,20 @@ port1.addEventListener("close",function(e){
 		div.textContent="entangled port is closed";
 		document.body.appendChild(div);
 });
-// window.opener.postMessage({},"*",[port2]);
+
 //port1を利用可能にする
 port1.start();
-// port1.postMessage("hello port");
+
 wr1 = new WeakRef(port1);
 wr2 = new WeakRef(port2);
-// window.gc();
+window.gc();
 }
 
+function postmessage() {
+    const { port1, port2 } = new MessageChannel();
 
 
+}
 
 // channel.port1.addEventListener("message",function(e){
 // 		//div要素を作って表示する
