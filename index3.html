@@ -23,6 +23,7 @@
 //実はwindow.openされたとき、親ウィンドウはwindow.openerに入っている
 const channel = new MessageChannel();
 window.opener.postMessage({},"*",[channel.port2]);
+channel.port1.start();
 channel.port1.addEventListener("close",function(e){
 		var div=document.createElement("div");
 		div.textContent="entangled port is closed";
@@ -36,7 +37,6 @@ channel.port1.addEventListener("message",function(e){
 		document.body.appendChild(div);
 	});
 //port1を利用可能にする
-channel.port1.start();
 
 // onsubmit（フォームが送信されたとき）に呼び出される
 function send(ev){
