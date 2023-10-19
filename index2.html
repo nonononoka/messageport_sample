@@ -14,7 +14,7 @@
 </form> -->
 
 <p>
-    <input type = "button" value = "send port and post message" onclick = "sendportandpostmessage()" >
+    <input type = "button" value = "create channel and GCed" onclick = "sendportandpostmessage()" >
     <!-- <input type = "button" value = "post message" onclick = "postmessage()">
     <input type = "button" value = "close page" onclick = "closeport()" id = 'close_button'> -->
 </p>
@@ -39,7 +39,7 @@ port1.start();
 // port1.postMessage("hello port");
 wr1 = new WeakRef(port1);
 wr2 = new WeakRef(port2);
-window.gc();
+// window.gc();
 }
 
 
