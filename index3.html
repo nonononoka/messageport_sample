@@ -14,7 +14,7 @@
 </form>
 
 <p>
-    <input type = "button" value = "close port" onclick = "closeport()" id = 'close_button'> -->
+    <input type = "button" value = "close port" onclick = "closeport()" id = 'close_button'> 
 </p>
 
 <script>
@@ -23,7 +23,7 @@
 //実はwindow.openされたとき、親ウィンドウはwindow.openerに入っている
 const channel = new MessageChannel();
 window.opener.postMessage({},"*",[channel.port2]);
-port1.addEventListener("close",function(e){
+channel.port1.addEventListener("close",function(e){
 		var div=document.createElement("div");
 		div.textContent="entangled port is closed";
 		document.body.appendChild(div);
