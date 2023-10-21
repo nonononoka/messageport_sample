@@ -24,18 +24,18 @@
 //実はwindow.openされたとき、親ウィンドウはwindow.openerに入っている
 const channel = new MessageChannel();
 
-channel.port1.addEventListener("close",function(e){
+channel.port1.onclose = function(e){
 		var div=document.createElement("div");
 		div.textContent="entangled port is closed";
 		document.body.appendChild(div);
-});
+};
 
-channel.port1.onclose = function(e){
+channel.port1.addEventListener("message",function(e){
 		//div要素を作って表示する
 		var div=document.createElement("div");
 		div.textContent="sent message:"+e.data;
 		document.body.appendChild(div);
-	};
+	});
 
 function sendport(){
 window.opener.postMessage({},"*",[channel.port2]);
