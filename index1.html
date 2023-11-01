@@ -10,13 +10,18 @@
     <input type = "button" value = "open page" onclick = "openwindow()">
 </p>
 <p>
-    <input type = "button" value = "close page" onclick = "closeport()" id = 'close_button'>
+    <input type = "button" value = "send port" onclick = "sendport()">
+</p>
+<p>
+    <input type = "button" value = "close port" onclick = "closeport()" id = 'close_button'>
 </p>
 
 <form onsubmit = "send(event)">
 	<p>
 		<input type = "text" name = "message" size = "50">
 		<input type = "submit" value = "send" id = "submit_button" disabled = true>
+		<input type = "button" value = "iframe remove" onclick = "iframeremove()"> 
+			<input type = "button" value = "crash iframe" onclick = "crash()"> 
 	</p>
 </form>
 
@@ -27,11 +32,52 @@ function openwindow(){
 	var towindow=window.open("index3.html?pppp");
 }
 
+function crash(){
+	document.querySelector("iframe").src 
+                = "chrome://crash"; 
+}
+
 function closeport(){
 	//開いたウィンドウ
 	const button = document.getElementById('close_button');
 	button.disabled = true;
 	port.close();
+}
+
+window.addEventListener('load', function() {
+    var iframe = document.createElement("iframe");
+    iframe.src = "index4.html";
+    iframe.style.width = "100%";
+    iframe.style.height = "100%";
+	var element = document.querySelector("body");
+    element.appendChild(iframe);
+	
+  }, false);
+
+  function iframeremove(){
+    document.querySelector("iframe").remove();
+}
+
+function sendport(){
+	const channel = new MessageChannel();
+	channel.port1.start();
+	port = channel.port1;
+	document.querySelector("iframe").contentWindow.postMessage({},"*",[channel.port2]);
+
+	const button = document.getElementById('submit_button');
+	button.disabled = false;	//向こう側から送られてきたポート
+	//ポートに対して送られてきたメッセージを表示する
+	port.addEventListener("message",function(e){
+		//div要素を作って表示する
+		var div=document.createElement("div");
+		div.textContent="sent message:"+e.data;
+		document.body.appendChild(div);
+	});
+	port.addEventListener("close",function(e){
+		var div=document.createElement("div");
+		div.textContent="entangled port is closed";
+		document.body.appendChild(div);
+})
 }
 
 function send(ev){
@@ -46,7 +92,11 @@ function send(ev){
 	//フォームは空の状態に戻す
 	form.reset();
 }
+
+
+
 //開いたウィンドウからMessagePortが送られてくるのを待つ
+//window.open()
 window.addEventListener("message",function(e){
 	const button = document.getElementById('submit_button');
 	button.disabled = false;

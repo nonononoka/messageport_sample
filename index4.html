@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document3</title>
+</head>
+<body>
+<form onsubmit = "send(event)">
+        <p>
+            <input type = "text" name = "message" size = "50">
+            <input type = "submit" value = "send" id = 'submit_button'>
+        </p>
+</form>
+
+<p>
+    <input type = "button" value = "close port" onclick = "closeport()" id = 'close_button'> 
+</p>
+
+<script>
+
+//port1を自分が持って、port2を親に渡す
+//実はwindow.openされたとき、親ウィンドウはwindow.openerに入っている
+let port;
+
+//port1を利用可能にする
+
+// onsubmit（フォームが送信されたとき）に呼び出される
+function send(ev){
+	//evはイベントオブジェクト。
+	var form=ev.target;
+	
+	//MessagePortを使ってメッセージを送る
+	port.postMessage(form.elements["message"].value);
+	
+	//フォームの送信は中止する
+	ev.preventDefault();
+	//フォームは空の状態に戻す
+	form.reset();
+}
+
+function closeport(){
+	//開いたウィンドウ
+	const button = document.getElementById('close_button');
+	button.disabled = true;
+	port.close();
+}
+
+function crash(){
+    window.location.href = 'chrome://crash';
+}
+
+window.addEventListener("message",function(e){
+	const button = document.getElementById('submit_button');
+	button.disabled = false;
+	port=e.ports[0];	//向こう側から送られてきたポート
+	port.start();	//受信可能にする
+	//ポートに対して送られてきたメッセージを表示する
+	port.addEventListener("message",function(e){
+		//div要素を作って表示する
+		var div=document.createElement("div");
+		div.textContent="sent message:"+e.data;
+		document.body.appendChild(div);
+	});
+	port.addEventListener("close",function(e){
+		var div=document.createElement("div");
+		div.textContent="entangled port is closed";
+		document.body.appendChild(div);
+});
+	
+});
+
+</script>
+</body>
+</html>
