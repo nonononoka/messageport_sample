@@ -7,18 +7,21 @@
 </head>
 <body>
 
-<!-- <p>
-	<input type = "button" value = "send port" onclick = "sendport()" id = 'send_button'> 
-</p> -->
+<p>
+	<input type = "button" value = "gc" onclick = "gc()" id = 'send_button'> 
+</p>
 
 <script>
 
 {
-    const channel = new MessageChannel();
-    window.opener.postMessage({},"*",[channel.port2]);
-    channel.port1.start();
-    const button = document.getElementById('send_button');
-        button.disabled = true;
+    const { port1, port2 } = new MessageChannel();
+    window.opener.postMessage({},"*",[port2]);
+    port1.start();
+    let wr = new WeakRef(port1);
+}
+
+function gc(){
+    window.gc();
 }
 
 </script>
