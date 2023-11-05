@@ -21,8 +21,6 @@ function openwindow(){
 //開いたウィンドウからMessagePortが送られてくるのを待つ
 //window.open()
 window.addEventListener("message",function(e){
-	const button = document.getElementById('submit_button');
-	button.disabled = false;
 	self.port=e.ports[0];	//向こう側から送られてきたポート
 	self.port.start();	//受信可能にする
 	//ポートに対して送られてきたメッセージを表示する
