@@ -108,6 +108,7 @@ window.addEventListener("message",function(e){
 		var div=document.createElement("div");
 		div.textContent="sent message:"+e.data;
 		document.body.appendChild(div);
+		console.log(e.source);
 	});
 	port.addEventListener("close",function(e){
 		var div=document.createElement("div");
