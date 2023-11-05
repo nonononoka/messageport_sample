@@ -18,9 +18,6 @@
     window.opener.postMessage({},"*",[port2]);
     port1.start();
     let wr = new WeakRef(port1);
-}
-
-function gc(){
     window.gc();
 }
 
