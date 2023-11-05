@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document3</title>
+</head>
+<body>
+
+<p>
+	<input type = "button" value = "send port" onclick = "sendport()" id = 'send_button'> 
+</p>
+
+<script>
+
+{
+    const channel = new MessageChannel();
+    window.opener.postMessage({},"*",[channel.port2]);
+    channel.port1.start();
+    const button = document.getElementById('send_button');
+        button.disabled = true;
+}
+
+</script>
+</body>
+</html>
