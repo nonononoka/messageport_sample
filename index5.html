@@ -6,14 +6,31 @@
     <title>Document5</title>
 </head>
 <body>
-
+    <form onsubmit = "send(event)">
+        <p>
+            <input type = "text" name = "message" size = "50">
+            <input type = "submit" value = "send" id = "submit_button">
+        </p>
+    </form>
 <script>
 
-{
-    const { port1, port2 } = new MessageChannel();
-    window.opener.postMessage({},"*",[port2]);
-    port1.start();
+const { port1, port2 } = new MessageChannel();
+window.opener.postMessage({},"*",[port2]);
+port1.start();
+
+function send(ev){
+    var form=ev.target;
+	
+	//MessagePortを使ってメッセージを送る
+	port1.postMessage(form.elements["message"].value);
+	port1.start();
+	//フォームの送信は中止する
+	ev.preventDefault();
+	//フォームは空の状態に戻す
+	form.reset();
 }
+
+
 
 </script>
 </body>
