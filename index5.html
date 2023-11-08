@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document3</title>
+    <title>Document5</title>
 </head>
 <body>
 
@@ -13,7 +13,6 @@
     const { port1, port2 } = new MessageChannel();
     window.opener.postMessage({},"*",[port2]);
     port1.start();
-    let wr = new WeakRef(port1);
 }
 
 </script>
