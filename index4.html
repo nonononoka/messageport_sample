@@ -24,6 +24,10 @@ window.addEventListener("message",function(e){
 	port=e.ports[0];	//向こう側から送られてきたポート
 	port.start();	//受信可能にする
 
+	var div=document.createElement("div");
+		div.textContent="port is coming";
+		document.body.appendChild(div);
+
 	port.addEventListener("close",function(e){
 		var div=document.createElement("div");
 		div.textContent="entangled port is closed";
